@@ -41,6 +41,9 @@ sub hasnum {
 
 sub hasstr {
     my $needle = shift;
+
+    warn "hasstr(): needle is undefined" unless defined $needle;
+
     for (@_) {
         return 1 if defined $_ && $needle eq $_;
     }
@@ -81,9 +84,16 @@ Usage:
  hasnum $num, ...
 
 Like C<< grep { $_ == $num } ... >> except: 1) it makes sure C<undef> does not
-match; 2) it makes sure non-numeric scalars does not match when C<$num> is zero.
+match; 2) it makes sure non-numeric scalars don't match when C<$num> is zero.
 
 =head2 hasstr
+
+Usage:
+
+ hasstr $str, ...
+
+Like C<< grep { $_ eq $num } ... >> except: 1) it makes sure C<undef> does not
+match empty string.
 
 
 =head1 SEE ALSO

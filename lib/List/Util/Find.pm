@@ -83,8 +83,9 @@ Usage:
 
  hasnum $num, ...
 
-Like C<< grep { $_ == $num } ... >> except: 1) it makes sure C<undef> does not
-match; 2) it makes sure non-numeric scalars don't match when C<$num> is zero.
+Like C<< grep { $_ == $num } ... >> except: 1) it short-circuits (exits early as
+soon as an item is found); 2) it makes sure C<undef> does not match; 3) it makes
+sure non-numeric scalars don't match when C<$num> is zero.
 
 =head2 hasstr
 
@@ -92,8 +93,9 @@ Usage:
 
  hasstr $str, ...
 
-Like C<< grep { $_ eq $num } ... >> except: 1) it makes sure C<undef> does not
-match empty string.
+Like C<< grep { $_ eq $num } ... >> except: 1) it short-circuits (exits early as
+soon as an item is found); 2) it makes sure C<undef> does not match empty
+string.
 
 
 =head1 SEE ALSO

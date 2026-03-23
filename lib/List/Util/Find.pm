@@ -1,14 +1,15 @@
 package List::Util::Find;
 
+use strict;
+use warnings;
+
+use Exporter 'import';
+
 # AUTHORITY
 # DATE
 # DIST
 # VERSION
 
-use strict;
-use warnings;
-
-use Exporter 'import';
 our @EXPORT_OK = qw(
                        hasnum
                        hasstr

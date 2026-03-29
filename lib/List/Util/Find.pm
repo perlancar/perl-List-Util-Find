@@ -229,10 +229,13 @@ Like C<< grep { $_ == $num } ... >> except: 1) it short-circuits (exits early as
 soon as an item is found); 2) it makes sure C<undef> does not match; 3) it makes
 sure non-numeric scalars don't match when C<$num> is zero.
 
-It is equivalent to:
+It is equivalent to something like:
 
- use List::Util qw(any);
- any { defined($_) && $_ == $num } @list;
+ use List::Util qw(first);
+ use Scalar::Util qw(looks_like_number);
+ defined(first { defined && looks_like_number($_) && $_ == $num } @list);
+
+except it does not use additional modules.
 
 =head2 hasstr
 
@@ -244,8 +247,10 @@ Like C<< grep { $_ eq $num } ... >> except: 1) it short-circuits (exits early as
 soon as an item is found); 2) it makes sure C<undef> does not match empty
 string.
 
- use List::Util qw(any);
- any { defined($_) && $_ eq $str } @list;
+It is equivalent to something like:
+
+ use List::Util qw(first);
+ defined(first { defined && $_ eq $str } @list);
 
 =head2 lacksnum
 
@@ -362,6 +367,18 @@ Usage:
  lacksnonestrs [$str1, $str2, ...], @list
 
 The multiple-needle version of L</lacksstr>.
+
+
+=head1 FAQ
+
+=head2 How about hasundef, hasref, hasarrayref, ...?
+
+They are trivial enough:
+
+ first { !defined } @list;
+ first { ref $_ } @list;
+ first { ref $_ eq 'ARRAY' } @list;
+ # and so on
 
 
 =head1 SEE ALSO
